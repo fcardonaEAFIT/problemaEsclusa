@@ -6,14 +6,21 @@ public class Esclusa {
 	this.nivel = nivel;
     }
 
-    public void synchronized barcoInfSup() {
-	while (nivel) wait();
+    public synchronized void barcoInfSup() {
+	try {
+	    while (nivel) wait();
+	} catch (InterruptedException ie) { }
+	System.out.println("Barco mar a lago");
 	nivel = true;
 	notifyAll();
     }
 
-    public void synchronized barcoSupInf() {
-	while (nivel) wait();
+    public synchronized void barcoSupInf() {
+
+	try {
+	    while (!nivel) wait();
+	} catch (InterruptedException ie) { }
+	System.out.println("Barco lago a mar");
 	nivel = false;
 	notifyAll();
     }
